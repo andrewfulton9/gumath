@@ -40,7 +40,12 @@ try:
 except ImportError:
     _cd = None
 
+# try:
+from . import mkl as _mkl
+# except ImportError:
+#    _mkl = None
 
+# should mkl be in here?
 __all__ = ['cuda', 'fold', 'functions', 'get_max_threads', 'gufunc', 'reduce',
            'set_max_threads', 'unsafe_add_kernel', 'vfold', 'xndvectorize']
 
@@ -144,6 +149,11 @@ def reduce(f, x, axes=0, dtype=None):
         return reduce_cuda(g, x, axes, dtype)
 
     return reduce_cpu(f, x, axes, dtype)
+
+'''
+not intirely sure what is happening here. Do we need get_mkl_reduction_func
+and mkl_reduce func
+'''
 
 
 maxcast = {
