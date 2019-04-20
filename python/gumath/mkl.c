@@ -19,7 +19,7 @@ static gm_tbl_t *table = NULL;
 
 static struct PyModuleDef functions_module = {
     PyModuleDef_HEAD_INIT,        /* m_base */
-    "functions",                  /* m_name */
+    "mkl",                  /* m_name */
     NULL,                         /* m_doc */
     -1,                           /* m_size */
     NULL,                         /* m_methods */
@@ -31,7 +31,7 @@ static struct PyModuleDef functions_module = {
 
 
 PyMODINIT_FUNC
-PyInit_functions(void)
+PyInit_mkl(void)
 {
     NDT_STATIC_CONTEXT(ctx);
     PyObject *m = NULL;
@@ -50,10 +50,10 @@ PyInit_functions(void)
            return Ndt_SetError(&ctx);
        }
 
-       if (gm_init_cpu_unary_kernels(table, &ctx) < 0) {
+       if (gm_init_mkl_unary_kernels(table, &ctx) < 0) {
            return Ndt_SetError(&ctx);
        }
-       if (gm_init_cpu_binary_kernels(table, &ctx) < 0) {
+       if (gm_init_mkl_binary_kernels(table, &ctx) < 0) {
            return Ndt_SetError(&ctx);
        }
 
@@ -65,7 +65,7 @@ PyInit_functions(void)
         goto error;
     }
 
-    if (Gumath_AddFunctions(m, table) < 0) {
+    if (Gumath_AddMKLFunctions(m, table) < 0) {
         goto error;
     }
 
