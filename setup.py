@@ -302,6 +302,21 @@ def gumath_extensions():
             runtime_library_dirs = add_runtime_library_dirs
         )
 
+    def mkl_ext():
+        sources = ["python/gumath/mkl.c"]
+
+        return Extension (
+            "gumath.mkl",
+            include_dirs = add_include_dirs,
+            library_dirs = add_library_dirs,
+            depends = add_depends,
+            sources = sources,
+            libraries = add_libraries,
+            extra_compile_args = add_extra_compile_args,
+            extra_link_args = add_extra_link_args,
+            runtime_library_dirs = add_runtime_library_dirs
+        )
+    
     def examples_ext():
         sources = ["python/gumath/examples.c"]
 
@@ -320,6 +335,8 @@ def gumath_extensions():
     extensions = [gumath_ext(), functions_ext(), examples_ext()]
     if config_vars.get("HAVE_CUDA"):
         extensions += [cuda_ext()]
+    if config_vars.get("HAVE_MKL"):
+        extensions += [mkl_ext()]
     return extensions
 
 setup (
