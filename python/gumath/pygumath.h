@@ -51,6 +51,7 @@ extern "C" {
 
 #define GM_CPU_FUNC  0x0001U
 #define GM_CUDA_MANAGED_FUNC 0x0002U
+#define GM_MKL_MANAGED_FUNC 0x0003U
 
 typedef struct {
     PyObject_HEAD
@@ -81,7 +82,11 @@ typedef struct {
 #define Gumath_AddCudaFunctions_RETURN int
 #define Gumath_AddCudaFunctions_ARGS (PyObject *, const gm_tbl_t *)
 
-#define GUMATH_MAX_API 4
+#define Gumath_AddMKLFunctions_INDEX 4
+#define Gumath_AddMKLFunctions_RETURN int
+#define Gumath_AddMKLFunctions_ARGS (PyObject *, const gm_tbl_t *)
+
+#define GUMATH_MAX_API 5
 
 
 #ifdef GUMATH_MODULE
@@ -89,6 +94,7 @@ static Gufunc_CheckExact_RETURN Gufunc_CheckExact Gufunc_CheckExact_ARGS;
 static Gufunc_Check_RETURN Gufunc_Check Gufunc_Check_ARGS;
 static Gumath_AddFunctions_RETURN Gumath_AddFunctions Gumath_AddFunctions_ARGS;
 static Gumath_AddCudaFunctions_RETURN Gumath_AddCudaFunctions Gumath_AddCudaFunctions_ARGS;
+static Gumath_AddMKLFunctions_RETURN Gumath_AddMKLFunctions Gumath_AddMKLFunctions_ARGS;
 #else
 static void **_gumath_api;
 
@@ -103,6 +109,9 @@ static void **_gumath_api;
 
 #define Gumath_AddCudaFunctions \
     (*(Gumath_AddCudaFunctions_RETURN (*)Gumath_AddCudaFunctions_ARGS) _gumath_api[Gumath_AddCudaFunctions_INDEX])
+
+#define Gumath_AddMKLFunctions \
+    (*(Gumath_AddMKLFunctions_RETURN (*)Gumath_AddMKLFunctions_ARGS) _gumath_api[Gumath_AddMKLFunctions_INDEX])
 
 
 static int

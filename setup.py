@@ -257,6 +257,13 @@ def gumath_extensions():
                 if os.path.isdir(d):
                     add_library_dirs.append(d)
 
+
+        # if config_vars["HAVE_MKL"]:
+        #     pass
+        # temporary fix
+        
+        
+
     def gumath_ext():
         sources = ["python/gumath/_gumath.c"]
 
@@ -304,6 +311,14 @@ def gumath_extensions():
 
     def mkl_ext():
         sources = ["python/gumath/mkl.c"]
+        # add_include_dirs.append('/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/include/mkl.h')
+
+        mkl_libraries = [
+            '/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/lib/intel64_lin/libmkl_rt.so',
+            '/opt/intel/compilers_and_libraries_2019.3.199/linux/compiler/lib/intel64_lin/mibiomp5.so'
+        ]
+        for x in mkl_libraries:
+            add_libraries.append(x)
 
         return Extension (
             "gumath.mkl",
@@ -335,8 +350,8 @@ def gumath_extensions():
     extensions = [gumath_ext(), functions_ext(), examples_ext()]
     if config_vars.get("HAVE_CUDA"):
         extensions += [cuda_ext()]
-    if config_vars.get("HAVE_MKL"):
-        extensions += [mkl_ext()]
+    # if config_vars.get("HAVE_MKL"):
+    extensions += [mkl_ext()]
     return extensions
 
 setup (

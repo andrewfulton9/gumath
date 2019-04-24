@@ -17,7 +17,7 @@ static gm_tbl_t *table = NULL;
 /*                                  Module                                  */
 /****************************************************************************/
 
-static struct PyModuleDef functions_module = {
+static struct PyModuleDef mkl_module = {
     PyModuleDef_HEAD_INIT,        /* m_base */
     "mkl",                  /* m_name */
     NULL,                         /* m_doc */
@@ -53,6 +53,7 @@ PyInit_mkl(void)
        if (gm_init_mkl_unary_kernels(table, &ctx) < 0) {
            return Ndt_SetError(&ctx);
        }
+       
        if (gm_init_mkl_binary_kernels(table, &ctx) < 0) {
            return Ndt_SetError(&ctx);
        }
@@ -60,7 +61,7 @@ PyInit_mkl(void)
        initialized = 1;
     }
 
-    m = PyModule_Create(&functions_module);
+    m = PyModule_Create(&mkl_module);
     if (m == NULL) {
         goto error;
     }

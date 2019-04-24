@@ -630,6 +630,32 @@ Gumath_AddCudaFunctions(PyObject *m, const gm_tbl_t *tbl)
     return 0;
 }
 
+static int
+add_mkl_function(const gm_func_t *f, void *args)
+{
+    struct map_args *a = (struct map_args *)args;
+    PyObject *func;
+
+    func = gufunc_new(a->tbl, f->name, GM_MKL_MANAGED_FUNC);
+    if (func == NULL) {
+      return -1;
+    }
+
+    return PyModule_AddObject(a->module, f->name, func);
+}
+
+static int
+Gumath_AddMKLFunctions(PyObject *m, const gm_tbl_t *tbl)
+{
+    struct map_args args = {m, tbl};
+
+    if (gm_tbl_map(tbl, add_mkl_function, &args) < 0) {
+      return -1;
+    }
+
+    return 0;
+}
+
 static PyObject *
 init_api(void)
 {
@@ -638,6 +664,7 @@ init_api(void)
     gumath_api[Gumath_AddFunctions_INDEX] = (void *)Gumath_AddFunctions;
     gumath_api[Gumath_AddFunctions_INDEX] = (void *)Gumath_AddFunctions;
     gumath_api[Gumath_AddCudaFunctions_INDEX] = (void *)Gumath_AddCudaFunctions;
+    gumath_api[Gumath_AddMKLFunctions_INDEX] = (void *)Gumath_AddMKLFunctions;
 
     return PyCapsule_New(gumath_api, "gumath._gumath._API", NULL);
 }

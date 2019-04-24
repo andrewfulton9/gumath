@@ -40,14 +40,14 @@ try:
 except ImportError:
     _cd = None
 
-# try:
-from . import mkl as _mkl
-# except ImportError:
-#    _mkl = None
+try:
+    from . import mkl as _mkl
+except ImportError:
+    _mkl = None
 
 # should mkl be in here?
 __all__ = ['cuda', 'fold', 'functions', 'get_max_threads', 'gufunc', 'reduce',
-           'set_max_threads', 'unsafe_add_kernel', 'vfold', 'xndvectorize']
+           'set_max_threads', 'unsafe_add_kernel', 'vfold', 'xndvectorize', 'mkl']
 
 
 # ==============================================================================

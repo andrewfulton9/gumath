@@ -229,6 +229,9 @@ GM_API int gm_init_bitwise_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
 GM_API int gm_init_cuda_unary_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
 GM_API int gm_init_cuda_binary_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
 
+GM_API int gm_init_mkl_unary_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
+GM_API int gm_init_mkl_binary_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
+
 GM_API int gm_init_example_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
 GM_API int gm_init_graph_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
 GM_API int gm_init_quaternion_kernels(gm_tbl_t *tbl, ndt_context_t *ctx);
