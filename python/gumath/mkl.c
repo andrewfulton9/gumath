@@ -54,9 +54,10 @@ PyInit_mkl(void)
            return Ndt_SetError(&ctx);
        }
        
-       if (gm_init_mkl_binary_kernels(table, &ctx) < 0) {
+       /*if (gm_init_mkl_binary_kernels(table, &ctx) < 0) {
            return Ndt_SetError(&ctx);
        }
+       */
 
        initialized = 1;
     }

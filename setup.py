@@ -311,14 +311,14 @@ def gumath_extensions():
 
     def mkl_ext():
         sources = ["python/gumath/mkl.c"]
-        # add_include_dirs.append('/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/include/mkl.h')
+        add_library_dirs.append('/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/include')
 
         mkl_libraries = [
-            '/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/lib/intel64_lin/libmkl_rt.so',
-            '/opt/intel/compilers_and_libraries_2019.3.199/linux/compiler/lib/intel64_lin/mibiomp5.so'
+            '/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/lib/intel64_lin',
+            '/opt/intel/compilers_and_libraries_2019.3.199/linux/compiler/lib/intel64_lin'
         ]
         for x in mkl_libraries:
-            add_libraries.append(x)
+            add_include_dirs.append(x)
 
         return Extension (
             "gumath.mkl",

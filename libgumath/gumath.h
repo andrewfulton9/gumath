@@ -44,7 +44,6 @@ extern "C" {
 #else
   #include <stdint.h>
 #endif
-
 #include "ndtypes.h"
 #include "xnd.h"
 

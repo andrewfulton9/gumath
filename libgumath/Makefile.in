@@ -43,6 +43,10 @@ SHARED_OBJS = .objs/apply.o .objs/func.o .objs/nploops.o .objs/tbl.o .objs/threa
               .objs/cpu_host_unary.o .objs/cpu_device_unary.o .objs/cpu_host_binary.o .objs/cpu_device_binary.o \
               .objs/common.o .objs/examples.o .objs/graph.o .objs/quaternion.o .objs/pdist.o
 
+# Added for MKL stuff
+OBJS += mkl_host_unary.o mkl_device_unary.o
+SHARED_OBJS += .objs/mkl_host_unary.o .objs/mkl_device_unary.o
+
 ifdef CUDA_CXX
 OBJS += cuda_host_unary.o cuda_device_unary.o cuda_host_binary.o cuda_device_binary.o
 SHARED_OBJS += .objs/cuda_host_unary.o .objs/cuda_device_unary.o .objs/cuda_host_binary.o .objs/cuda_device_binary.o
@@ -182,10 +186,28 @@ Makefile extending/pdist.c gumath.h
 	$(CC) -I. $(GM_CFLAGS_SHARED) -c extending/pdist.c -o .objs/pdist.o
 
 
+# MKL
+mkl_host_unary.o:\
+Makefile kernels/mkl_host_unary.c kernels/common.h gumath.h kernels/mkl_device_unary.h
+	$(CC) -I. $(GM_CFLAGS) -I/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/include -Wno-absolute-value -c kernels/mkl_host_unary.c
+
+.objs/mkl_host_unary.o:\
+Makefile kernels/mkl_host_unary.c kernels/common.h gumath.h kernels/mkl_device_unary.h
+	$(CC) -I. $(GM_CFLAGS_SHARED) -I/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/include -Wno-absolute-value -c kernels/mkl_host_unary.c -o .objs/mkl_host_unary.o
+
+mkl_device_unary.o:\
+Makefile kernels/mkl_device_unary.cc kernels/common.h gumath.h kernels/mkl_device_unary.h
+	$(CXX) -I. $(GM_CXX_FLAGS) -I/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/include -Wno-absolute-value -c kernels/mkl_device_unary.cc
+
+.objs/mkl_device_unary.o:\
+Makefile kernels/mkl_device_unary.cc kernels/common.h gumath.h kernels/mkl_device_unary.h
+	$(CXX) -I/opt/intel/compilers_and_libraries_2019.3.199/linux/mkl/include -I. $(GM_CXX_FLAGS_SHARED) -fPIC -Wno-absolute-value -c kernels/mkl_device_unary.cc -o .objs/mkl_device_unary.o
+
+
 # Cuda
 cuda_host_unary.o:\
 Makefile kernels/cuda_host_unary.c kernels/common.h kernels/cuda_device_unary.h gumath.h
-	$(CC) -I. $(GM_CFLAGS) -Wno-absolute-value -c kernels/cuda_host_unary.c
+	$(CC) -I. $(GM_CFLAGS) -Wno-absolute-value -c kernels/cuda_host_unary.c 
 
 .objs/cuda_host_unary.o:\
 Makefile kernels/cuda_host_unary.c kernels/common.h kernels/cuda_device_unary.h gumath.h
@@ -193,7 +215,7 @@ Makefile kernels/cuda_host_unary.c kernels/common.h kernels/cuda_device_unary.h 
 
 cuda_device_unary.o:\
 Makefile kernels/cuda_device_unary.cu kernels/common.h kernels/cuda_device_unary.h gumath.h
-	$(CUDA_CXX) --compiler-options "$(GM_CXXFLAGS)" $(GM_CUDA_CXXFLAGS) -c kernels/cuda_device_unary.cu
+	$(CUDA_CXX) --compiler-options "$(GM_CXXFLAGS)" $(GM_CUDA_CXXFLAGS)  -c kernels/cuda_device_unary.cu
 
 .objs/cuda_device_unary.o:\
 Makefile kernels/cuda_device_unary.cu kernels/common.h kernels/cuda_device_unary.h gumath.h
