@@ -33,6 +33,7 @@
 import gumath as gm
 import gumath.functions as fn
 import gumath.examples as ex
+from gumath import mkl
 from xnd import xnd
 from ndtypes import ndt
 from extending import Graph
@@ -1787,6 +1788,8 @@ class LongIndexSliceTest(unittest.TestCase):
                      indices_generator_args=(3,))
         t.run()
 
+class TestMKL(unittest.TestCase):
+    pass
 
 ALL_TESTS = [
   TestAPI,
