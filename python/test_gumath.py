@@ -1789,7 +1789,16 @@ class LongIndexSliceTest(unittest.TestCase):
         t.run()
 
 class TestMKL(unittest.TestCase):
-    pass
+    def test_sin(self):
+        for lst, t, dtype in TEST_CASES:
+            x = xnd(lst, type=t)
+            y = mkl.sin(x)
+
+            if np is not None:
+                a = np.array(lst, dtype=dtype)
+                b = np.sin(a)
+                np.testing.assert_equal(y, b)
+        
 
 ALL_TESTS = [
   TestAPI,

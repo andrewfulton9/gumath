@@ -50,9 +50,8 @@ extern "C" {
    stable across versions. */
 
 #define GM_CPU_FUNC  0x0001U
-#define GM_MKL_MANAGED_FUNC 0x0002U
-#define GM_CUDA_MANAGED_FUNC 0x0003U
-
+#define GM_CUDA_MANAGED_FUNC 0x0002U
+#define GM_MKL_MANAGED_FUNC 0x0003U
 
 typedef struct {
     PyObject_HEAD
@@ -79,11 +78,11 @@ typedef struct {
 #define Gumath_AddFunctions_RETURN int
 #define Gumath_AddFunctions_ARGS (PyObject *, const gm_tbl_t *)
 
-#define Gumath_AddCudaFunctions_INDEX 4
+#define Gumath_AddCudaFunctions_INDEX 3
 #define Gumath_AddCudaFunctions_RETURN int
 #define Gumath_AddCudaFunctions_ARGS (PyObject *, const gm_tbl_t *)
 
-#define Gumath_AddMKLFunctions_INDEX 3
+#define Gumath_AddMKLFunctions_INDEX 4
 #define Gumath_AddMKLFunctions_RETURN int
 #define Gumath_AddMKLFunctions_ARGS (PyObject *, const gm_tbl_t *)
 
