@@ -302,14 +302,14 @@ _gufunc_call(GufuncObject *self, PyObject *args, PyObject *kwargs,
         li[k] = stack[k].index;
     }
 
-    if (have_cpu_device) {
-        if (self->flags & GM_CUDA_MANAGED_FUNC) {
-            PyErr_SetString(PyExc_ValueError,
-                "cannot run a cuda function on xnd objects with cpu memory");
-            clear_pystack(pystack, nargs);
-            return NULL;
-        }
-    }
+    /* if (have_cpu_device) { */
+    /*     if (self->flags & GM_CUDA_MANAGED_FUNC) { */
+    /*         /\* PyErr_SetString(PyExc_ValueError, *\/ */
+    /*         /\*     "cannot run a cuda function on xnd objects with cpu memory"); *\/ */
+    /*         /\* clear_pystack(pystack, nargs); *\/ */
+    /*         return NULL; */
+    /*     } */
+    /* } */
 
     kernel = gm_select(&spec, self->tbl, self->name, types, li, nin, nout,
                        nout && check_broadcast, stack, &ctx);
