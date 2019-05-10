@@ -1819,6 +1819,7 @@ ALL_TESTS = [
   TestFunctions,
   TestCudaManaged,
   LongIndexSliceTest,
+  TestMKL
 ]
 
 
